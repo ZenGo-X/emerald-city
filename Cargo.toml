@@ -2,6 +2,14 @@
 name = "emerald-city"
 version = "0.1.0"
 
+authors = [
+    "Omer <omer@kzencorp.com>"
+]
+description = "WASM/HW-friendly lightweight client application for threshold ECDSA"
+homepage = "https://github.com/KZen-networks"
+repository = "https://github.com/KZen-networks/emerald-city"
+license = "GPL-3.0-or-later"
+
 
 [lib]
 crate-type = ["staticlib"]
