@@ -18,19 +18,24 @@ use curv::arithmetic::num_bigint::from;
 use curv::arithmetic::traits::Converter;
 use curv::arithmetic::traits::Samplable;
 use num_traits::{One, Zero};
-use sha3::{Digest, Sha3_256};
+use cryptoxide::digest::Digest;
+use cryptoxide::sha3::Sha3;
+
 //TODO:  using the function with BigInt's as input instead of string's makes it impossible to commit to empty message or use empty randomness
 impl Commitment<BigInt> for HashCommitment {
     fn create_commitment_with_user_defined_randomness(
         message: &BigInt,
         blinding_factor: &BigInt,
     ) -> BigInt {
-        let mut digest = Sha3_256::new();
+        let mut digest = Sha3::sha3_256();
         let bytes_message: Vec<u8> = BigInt::to_vec(&message);
         digest.input(&bytes_message);
         let bytes_blinding_factor: Vec<u8> = BigInt::to_vec(&blinding_factor);
         digest.input(&bytes_blinding_factor);
-        from(digest.result().as_ref())
+
+        let mut result = [0; 32];
+        digest.result(&mut result);
+        from(result.as_ref())
     }
 
     fn create_commitment(message: &BigInt) -> (BigInt, BigInt) {
@@ -53,7 +58,9 @@ mod tests {
     use curv::arithmetic::traits::Converter;
     use curv::arithmetic::traits::Samplable;
     use num_traits::{One, Zero};
-    use sha3::{Digest, Sha3_256};
+    use cryptoxide::digest::Digest;
+    use cryptoxide::sha3::Sha3;
+
     #[test]
     fn test_bit_length_create_commitment() {
         let hex_len = SECURITY_BITS;
@@ -99,7 +106,7 @@ mod tests {
 
     #[test]
     fn test_hashing_create_commitment_with_user_defined_randomness() {
-        let mut digest = Sha3_256::new();
+        let mut digest = Sha3::sha3_256();
         let message = BigInt::one();
         let commitment = HashCommitment::create_commitment_with_user_defined_randomness(
             &message,
@@ -109,8 +116,9 @@ mod tests {
         digest.input(&message2);
         let bytes_blinding_factor: Vec<u8> = (&BigInt::zero()).to_bytes_be();
         digest.input(&bytes_blinding_factor);
-        let hash_result = from(digest.result().as_ref());
+        let mut result = [0; 32];
+        digest.result(&mut result);
+        let hash_result = from(result.as_ref());
         assert_eq!(&commitment, &hash_result);
     }
-
 }
