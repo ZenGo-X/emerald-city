@@ -23,10 +23,8 @@ extern crate num_bigint;
 extern crate num_integer;
 extern crate num_traits;
 extern crate rand;
-extern crate sha3;
 extern crate zeroize;
 
-// TODO: replace
 extern crate cryptoxide;
 
 pub mod curv;
