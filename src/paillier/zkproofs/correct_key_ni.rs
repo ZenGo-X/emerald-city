@@ -13,7 +13,6 @@
 
     @license GPL-3.0+ <https://github.com/KZen-networks/zk-paillier/blob/master/LICENSE>
 */
-use std::iter;
 use std::ops::Shl;
 
 use curv::arithmetic::num_bigint::{from, BigInt};

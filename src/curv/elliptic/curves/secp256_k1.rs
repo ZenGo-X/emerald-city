@@ -329,7 +329,7 @@ impl ECPoint<PK, SK> for Secp256k1Point {
                 let bytes_vec = template;
                 let mut template: Vec<u8> = vec![4];
                 template.append(&mut bytes_vec.clone());
-                let mut bytes_slice = &template[..];
+                let bytes_slice = &template[..];
 
                 bytes_array_65.copy_from_slice(&bytes_slice[0..65]);
                 let result = PK::from_slice(&bytes_array_65);
@@ -349,7 +349,7 @@ impl ECPoint<PK, SK> for Secp256k1Point {
                 println!("rand {:?}", 2 + bit as u8);
                 let mut template: Vec<u8> = vec![2 + bit as u8];
                 template.append(&mut bytes_vec.clone());
-                let mut bytes_slice = &template[..];
+                let bytes_slice = &template[..];
 
                 bytes_array_33.copy_from_slice(&bytes_slice[0..33]);
                 let result = PK::from_slice(&bytes_array_33);
@@ -364,7 +364,7 @@ impl ECPoint<PK, SK> for Secp256k1Point {
                 let bytes_vec = bytes_slice.to_vec();
                 let mut template: Vec<u8> = vec![4];
                 template.append(&mut bytes_vec.clone());
-                let mut bytes_slice = &template[..];
+                let bytes_slice = &template[..];
 
                 bytes_array_65.copy_from_slice(&bytes_slice[0..65]);
                 let result = PK::from_slice(&bytes_array_65);
@@ -561,7 +561,6 @@ impl<'de> Visitor<'de> for Secp256k1PointVisitor {
 }
 #[cfg(test)]
 mod tests {
-    use curv::arithmetic::num_bigint::from;
     use curv::arithmetic::num_bigint::BigInt;
     use curv::arithmetic::traits::Converter;
     use curv::arithmetic::traits::Modulo;
