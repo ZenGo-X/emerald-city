@@ -7,3 +7,4 @@
 
 pub mod hash_sha256;
 pub mod traits;
+pub mod constants;

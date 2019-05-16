@@ -65,11 +65,11 @@ impl ProveDLog for DLogProof {
         let challenge = HSha256::create_hash(&[
             &proof.pk_t_rand_commitment.bytes_compressed_to_big_int(),
             &ec_point.bytes_compressed_to_big_int(),
-            &proof.pk.bytes_compressed_to_big_int(),
+            &proof.pk.clone().bytes_compressed_to_big_int(),
         ]);
 
         let sk_challenge: FE = ECScalar::from(&challenge);
-        let pk = proof.pk;
+        let pk = proof.pk.clone();
         let pk_challenge = pk.scalar_mul(&sk_challenge.get_element());
 
         let base_point: GE = ECPoint::generator();
