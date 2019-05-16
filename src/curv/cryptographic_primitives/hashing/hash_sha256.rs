@@ -9,7 +9,6 @@ use super::traits::Hash;
 use cryptoxide::digest::Digest;
 use cryptoxide::sha2::Sha256;
 use curv::arithmetic::num_bigint::{from, BigInt};
-use curv::arithmetic::traits::Converter;
 use curv::elliptic::curves::secp256_k1::{FE, GE};
 use curv::elliptic::curves::traits::{ECPoint, ECScalar};
 

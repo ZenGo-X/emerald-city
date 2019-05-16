@@ -1,7 +1,6 @@
 pub mod core;
 pub mod encoding;
 pub mod keygen;
-mod serialize;
 pub mod traits;
 pub mod zkproofs;
 

@@ -17,7 +17,6 @@ use super::SECURITY_BITS;
 use curv::arithmetic::num_bigint::from;
 use curv::arithmetic::traits::Converter;
 use curv::arithmetic::traits::Samplable;
-use num_traits::{One, Zero};
 use cryptoxide::digest::Digest;
 use cryptoxide::sha3::Sha3;
 

@@ -10,13 +10,6 @@ use num_traits::cast::ToPrimitive;
 use num_traits::identities::Zero;
 use num_traits::Num;
 use num_traits::One;
-use serde::de;
-use serde::de::{MapAccess, Visitor};
-use serde::ser::SerializeStruct;
-use serde::ser::{Serialize, Serializer};
-use serde::{Deserialize, Deserializer};
-use std::fmt;
-use std::num::{NonZeroU16, NonZeroUsize};
 use std::ops::{BitAnd, BitOr, Shl};
 
 impl Samplable for BigUint {
@@ -70,7 +63,7 @@ impl Modulo for BigUint {
     }
 
     fn mod_inv(a: &Self, modulus: &Self) -> Self {
-        let (d, x, y): (BN, BN, BN) = egcd(a, modulus);
+        let x = egcd(a, modulus).1; //[d,x,y]
         let x_ubn = x
             .mod_floor(&modulus.to_bigint().unwrap())
             .to_biguint()
@@ -169,7 +162,7 @@ impl BitManipulation for BigUint {
         }
     }
 
-    fn test_bit(self: &Self, bit: usize) -> bool {
+    fn test_bit(self: &Self, _bit: usize) -> bool {
         return true; //stub
     }
 }
