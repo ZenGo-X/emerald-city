@@ -487,12 +487,9 @@ impl ECPoint<PK, SK> for Secp256k1Point {
         v.extend(vec_x);
         v.extend(vec_y);
 
-        let mut array = [0; 33];
-        array.copy_from_slice(&v); //TODO: probably better way of Vec[33] -> &[u8; 33]
-
         Secp256k1Point {
             purpose: "base_fe",
-            ge: PK::parse_compressed(&array).unwrap(),
+            ge: PK::parse_slice(&v, None).unwrap(),
         }
     }
 }
