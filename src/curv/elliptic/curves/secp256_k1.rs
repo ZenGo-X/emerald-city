@@ -327,8 +327,12 @@ impl ECPoint<PK, SK> for Secp256k1Point {
     /// 2) remove first byte [1..33]
     /// 3) call from_bytes
     fn bytes_compressed_to_big_int(&self) -> BigInt {
-        let serial = self.ge.serialize();
-        from(&serial[0..33])
+        let mut serial = self.ge.serialize();
+        let y_coor_last_byte = serial[64].clone();
+        let y_coor_parity = (y_coor_last_byte << 7) >>7;
+        let mut compressed = vec![2 + y_coor_parity];
+        compressed.append(&mut serial[1..33].to_vec());
+        from(&compressed)
     }
 
     fn x_coor(&self) -> Option<BigInt> {
