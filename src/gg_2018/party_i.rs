@@ -81,7 +81,7 @@ pub struct SharedKeys {
     pub x_i: FE,
 }
 
-#[derive(Clone, Copy, Serialize, Deserialize)]
+#[derive(Clone, Serialize, Deserialize)]
 pub struct SignKeys {
     pub w_i: FE,
     pub g_w_i: GE,
@@ -311,7 +311,7 @@ impl PartyPrivate {
 
     pub fn y_i(&self) -> GE {
         let g: GE = ECPoint::generator();
-        g * self.u_i
+        g * self.u_i.clone()
     }
 
     pub fn decrypt(&self, ciphertext: BigInt) -> RawPlaintext {
@@ -319,7 +319,7 @@ impl PartyPrivate {
     }
 
     pub fn refresh_private_key(&self, factor: &FE, index: usize) -> Keys {
-        let u: FE = self.u_i + factor;
+        let u: FE = self.u_i.clone() + factor;
         let y = &ECPoint::generator() * &u;
         let (ek, dk) = Paillier::keypair().keys();
 
@@ -334,8 +334,8 @@ impl PartyPrivate {
 
     pub fn update_private_key(&self, factor_u_i: &FE, factor_x_i: &FE) -> Self {
         PartyPrivate {
-            u_i: self.u_i + factor_u_i,
-            x_i: self.x_i + factor_x_i,
+            u_i: self.u_i.clone() + factor_u_i,
+            x_i: self.x_i.clone() + factor_x_i,
             dk: self.dk.clone(),
         }
     }

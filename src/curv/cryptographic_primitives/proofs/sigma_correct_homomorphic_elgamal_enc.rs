@@ -46,16 +46,16 @@ impl HomoELGamalProof {
     pub fn prove(w: &HomoElGamalWitness, delta: &HomoElGamalStatement) -> HomoELGamalProof {
         let mut s1: FE = ECScalar::new_random();
         let mut s2: FE = ECScalar::new_random();
-        let mut A1 = delta.H * s1;
-        let mut A2 = delta.Y * s2;
-        let A3 = delta.G * s2;
-        let T = A1 + A2;
+        let mut A1 = delta.H.clone() * s1.clone();
+        let mut A2 = delta.Y.clone() * s2.clone();
+        let A3 = delta.G.clone() * s2.clone();
+        let T = A1.clone() + A2.clone();
         let e = HSha256::create_hash_from_ge(&[
             &T, &A3, &delta.G, &delta.H, &delta.Y, &delta.D, &delta.E,
         ]);
         // dealing with zero field element
-        let z1 = if w.x != FE::zero() { s1 + w.x * e } else { s1 };
-        let z2 = s2 + w.r * e;
+        let z1 = if w.x.clone() != FE::zero() { s1.clone() + w.x.clone() * e.clone() } else { s1.clone() };
+        let z2 = s2.clone() + w.r.clone() * e.clone();
         s1.zeroize();
         s2.zeroize();
         A1.zeroize();
@@ -64,12 +64,12 @@ impl HomoELGamalProof {
     }
     pub fn verify(&self, delta: &HomoElGamalStatement) -> Result<(), ProofError> {
         let e = HSha256::create_hash_from_ge(&[
-            &self.T, &self.A3, &delta.G, &delta.H, &delta.Y, &delta.D, &delta.E,
+            &self.T.clone(), &self.A3.clone(), &delta.G.clone(), &delta.H.clone(), &delta.Y.clone(), &delta.D.clone(), &delta.E.clone(),
         ]);
-        let z1H_plus_z2Y = delta.H * self.z1 + delta.Y * self.z2;
-        let T_plus_eD = self.T + delta.D * e;
-        let z2G = delta.G * self.z2;
-        let A3_plus_eE = self.A3 + delta.E * e;
+        let z1H_plus_z2Y = delta.H.clone() * self.z1.clone() + delta.Y.clone() * self.z2.clone();
+        let T_plus_eD = self.T.clone() + delta.D.clone() * e.clone();
+        let z2G = delta.G.clone() * self.z2.clone();
+        let A3_plus_eE = self.A3.clone() + delta.E.clone() * e.clone();
         if z1H_plus_z2Y == T_plus_eD && z2G == A3_plus_eE {
             Ok(())
         } else {
