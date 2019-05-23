@@ -32,6 +32,3 @@ zeroize = "0.5.2"
 
 libsecp256k1 = "0.2.2"
 
-# [dev-dependencies]
-# # or [target.'cfg(target_arch = "wasm32")'.dev-dependencies]
-# wasm-bindgen-test = { git = 'https://github.com/rustwasm/wasm-bindgen' }
