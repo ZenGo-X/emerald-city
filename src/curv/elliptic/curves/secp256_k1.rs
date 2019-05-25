@@ -18,20 +18,20 @@
 
 use super::rand::{thread_rng, Rng};
 // use super::secp256k1::util::{
-//     // CURVE_ORDER, 
-//     // GENERATOR_X, 
-//     // GENERATOR_Y, 
-//     SECRET_KEY_SIZE, 
+//     // CURVE_ORDER,
+//     // GENERATOR_X,
+//     // GENERATOR_Y,
+//     SECRET_KEY_SIZE,
 //     RAW_PUBLIC_KEY_SIZE,
 // };
-use curv::cryptographic_primitives::hashing::constants::{
-    CURVE_ORDER, GENERATOR_X, GENERATOR_Y, SECRET_KEY_SIZE, UNCOMPRESSED_PUBLIC_KEY_SIZE,
-};
 use super::secp256k1::{PublicKey, SecretKey};
 use super::traits::{ECPoint, ECScalar};
 use curv::arithmetic::num_bigint::from;
 use curv::arithmetic::num_bigint::BigInt;
 use curv::arithmetic::traits::{Converter, Modulo};
+use curv::cryptographic_primitives::hashing::constants::{
+    CURVE_ORDER, GENERATOR_X, GENERATOR_Y, SECRET_KEY_SIZE, UNCOMPRESSED_PUBLIC_KEY_SIZE,
+};
 use curv::cryptographic_primitives::hashing::hash_sha256::HSha256;
 use curv::cryptographic_primitives::hashing::traits::Hash;
 use num_traits::Num;
@@ -70,8 +70,8 @@ impl Secp256k1Scalar {
     pub fn copy(&self) -> Secp256k1Scalar {
         Secp256k1Scalar {
             purpose: self.purpose,
-            fe: self.fe.clone()
-        } 
+            fe: self.fe.clone(),
+        }
     }
 }
 
@@ -111,8 +111,8 @@ impl Secp256k1Point {
     pub fn copy(&self) -> Secp256k1Point {
         Secp256k1Point {
             purpose: self.purpose,
-            ge: self.ge.clone()
-        } 
+            ge: self.ge.clone(),
+        }
     }
 }
 
@@ -329,7 +329,7 @@ impl ECPoint<PK, SK> for Secp256k1Point {
     fn bytes_compressed_to_big_int(&self) -> BigInt {
         let mut serial = self.ge.serialize();
         let y_coor_last_byte = serial[64].clone();
-        let y_coor_parity = (y_coor_last_byte << 7) >>7;
+        let y_coor_parity = (y_coor_last_byte << 7) >> 7;
         let mut compressed = vec![2 + y_coor_parity];
         compressed.append(&mut serial[1..33].to_vec());
         from(&compressed)

@@ -54,7 +54,11 @@ impl HomoELGamalProof {
             &T, &A3, &delta.G, &delta.H, &delta.Y, &delta.D, &delta.E,
         ]);
         // dealing with zero field element
-        let z1 = if w.x.clone() != FE::zero() { s1.clone() + w.x.clone() * e.clone() } else { s1.clone() };
+        let z1 = if w.x.clone() != FE::zero() {
+            s1.clone() + w.x.clone() * e.clone()
+        } else {
+            s1.clone()
+        };
         let z2 = s2.clone() + w.r.clone() * e.clone();
         s1.zeroize();
         s2.zeroize();
@@ -64,7 +68,13 @@ impl HomoELGamalProof {
     }
     pub fn verify(&self, delta: &HomoElGamalStatement) -> Result<(), ProofError> {
         let e = HSha256::create_hash_from_ge(&[
-            &self.T.clone(), &self.A3.clone(), &delta.G.clone(), &delta.H.clone(), &delta.Y.clone(), &delta.D.clone(), &delta.E.clone(),
+            &self.T.clone(),
+            &self.A3.clone(),
+            &delta.G.clone(),
+            &delta.H.clone(),
+            &delta.Y.clone(),
+            &delta.D.clone(),
+            &delta.E.clone(),
         ]);
         let z1H_plus_z2Y = delta.H.clone() * self.z1.clone() + delta.Y.clone() * self.z2.clone();
         let T_plus_eD = self.T.clone() + delta.D.clone() * e.clone();

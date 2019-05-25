@@ -14,11 +14,11 @@ use curv::arithmetic::num_bigint::BigInt;
 
 use super::traits::Commitment;
 use super::SECURITY_BITS;
+use cryptoxide::digest::Digest;
+use cryptoxide::sha3::Sha3;
 use curv::arithmetic::num_bigint::from;
 use curv::arithmetic::traits::Converter;
 use curv::arithmetic::traits::Samplable;
-use cryptoxide::digest::Digest;
-use cryptoxide::sha3::Sha3;
 
 //TODO:  using the function with BigInt's as input instead of string's makes it impossible to commit to empty message or use empty randomness
 impl Commitment<BigInt> for HashCommitment {
@@ -52,13 +52,13 @@ mod tests {
     use super::Commitment;
     use super::HashCommitment;
     use super::SECURITY_BITS;
+    use cryptoxide::digest::Digest;
+    use cryptoxide::sha3::Sha3;
     use curv::arithmetic::num_bigint::from;
     use curv::arithmetic::num_bigint::BigInt;
     use curv::arithmetic::traits::Converter;
     use curv::arithmetic::traits::Samplable;
     use num_traits::{One, Zero};
-    use cryptoxide::digest::Digest;
-    use cryptoxide::sha3::Sha3;
 
     #[test]
     fn test_bit_length_create_commitment() {
