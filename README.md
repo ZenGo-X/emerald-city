@@ -7,4 +7,4 @@ Warning: Do not use in production.
 
 **Development Process** 
 
-Changes are accepted in the form of pull requests. We welcone any contribution. Feel free to [reach out](mailto:github@kzencorp.com) or join the KZen Research [Telegram]( https://t.me/kzen_research) for discussions on code and research.
+Changes are accepted in the form of pull requests. We welcone any contribution. Feel free to [reach out](mailto:github@kzencorp.com) or join the ZenGo X [Telegram]( https://t.me/joinchat/ET1mddGXRoyCxZ-7) for discussions on code and research.
